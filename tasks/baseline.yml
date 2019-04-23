@@ -4,6 +4,14 @@
   hostname:
     name: "{{ rh_kerberosid }}"
 
+- name: Set SSH config to fix broken pipe issues in vmware
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    backup: yes
+    block: |
+    Host *
+        IPQoS=throughput
+
 - name: Configuring fast mirrors
   lineinfile:
     path: /etc/dnf/dnf.conf
